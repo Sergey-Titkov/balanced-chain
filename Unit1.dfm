@@ -1,9 +1,11 @@
 object fmMain: TfmMain
   Left = 201
   Top = 133
-  Caption = 'fmMain'
-  ClientHeight = 587
-  ClientWidth = 1046
+  BorderIcons = [biSystemMenu, biMinimize]
+  BorderStyle = bsSingle
+  Caption = #1057#1073#1072#1083#1072#1085#1089#1080#1088#1086#1074#1072#1085#1085#1072#1103' '#1087#1088#1086#1080#1079#1074#1086#1076#1089#1090#1074#1077#1085#1085#1072#1103' '#1094#1077#1087#1086#1095#1082#1072'.'
+  ClientHeight = 475
+  ClientWidth = 655
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -14,20 +16,6 @@ object fmMain: TfmMain
   OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
-  object lb4: TLabel
-    Left = 588
-    Top = 432
-    Width = 14
-    Height = 13
-    Caption = 'lb4'
-  end
-  object lb5: TLabel
-    Left = 588
-    Top = 462
-    Width = 14
-    Height = 13
-    Caption = 'lb5'
-  end
   object Label1: TLabel
     Left = 11
     Top = 432
@@ -143,13 +131,14 @@ object fmMain: TfmMain
     ParentFont = False
     TabOrder = 6
   end
-  object btn2: TButton
+  object btnStartGame: TButton
     Left = 6
     Top = 4
     Width = 75
     Height = 25
     Caption = #1053#1072#1095#1072#1090#1100' '#1080#1075#1088#1091
     TabOrder = 7
+    OnClick = btnStartGameClick
   end
   object tmTimer: TTimer
     Enabled = False

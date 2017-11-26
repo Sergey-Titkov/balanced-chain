@@ -16,11 +16,9 @@ type
     lstThree: TListBox;
     se1: TSpinEdit;
     btnProceedTurn: TButton;
-    lb4: TLabel;
-    lb5: TLabel;
     lstFour: TListBox;
     lstFive: TListBox;
-    btn2: TButton;
+    btnStartGame: TButton;
     tmTimer: TTimer;
     Label1: TLabel;
     lbBalans: TLabel;
@@ -35,6 +33,7 @@ type
       var AValue: TIntegerArray);
     procedure FormCreate(Sender: TObject);
     procedure tmTimerTimer(Sender: TObject);
+    procedure btnStartGameClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -192,6 +191,28 @@ begin
   tmTimer.Enabled := true;
   fmMain.Enabled  := true;
   updateStartTurnCaptiont;
+end;
+
+procedure TfmMain.btnStartGameClick(Sender: TObject);
+begin
+  fmMain.Enabled  := false;
+  tmTimer.Enabled := false;
+  iBalans := 50;
+  iCountDown := 15;
+  SetLength(byteQueryOfOne, 0);
+  SetLength(byteQueryOfTwo, 0);
+  SetLength(byteQueryOfThree, 0);
+  SetLength(byteQueryOfFour, 0);
+  SetLength(byteQueryOfFive, 0);
+
+  lstOne.Items.Clear;
+  lstTwo.Items.Clear;
+  lstThree.Items.Clear;
+  lstFour.Items.Clear;
+  lstFive.Items.Clear;
+  updateStartTurnCaptiont;
+  tmTimer.Enabled := true;
+  fmMain.Enabled  := true;
 end;
 
 procedure TfmMain.btnProceedTurnClick(Sender: TObject);
