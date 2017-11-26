@@ -100,6 +100,7 @@ object fmMain: TfmMain
     Width = 217
     Height = 25
     Caption = #1057#1076#1077#1083#1072#1090#1100' '#1093#1086#1076
+    Enabled = False
     TabOrder = 4
     OnClick = btnProceedTurnClick
   end

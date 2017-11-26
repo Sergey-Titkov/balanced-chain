@@ -198,6 +198,7 @@ begin
   fmMain.Enabled  := false;
   tmTimer.Enabled := false;
   iBalans := 50;
+  lbBalans.Caption := IntToStr(iBalans);
   iCountDown := 15;
   SetLength(byteQueryOfOne, 0);
   SetLength(byteQueryOfTwo, 0);
@@ -211,6 +212,7 @@ begin
   lstFour.Items.Clear;
   lstFive.Items.Clear;
   updateStartTurnCaptiont;
+  btnProceedTurn.Enabled := true;
   tmTimer.Enabled := true;
   fmMain.Enabled  := true;
 end;
