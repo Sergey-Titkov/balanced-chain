@@ -10,34 +10,44 @@ type
 
   TIntegerArray = array of Integer;
 
-  TForm1 = class(TForm)
-    lst1: TListBox;
-    lst2: TListBox;
-    lst3: TListBox;
+  TfmMain = class(TForm)
+    lstOne: TListBox;
+    lstTwo: TListBox;
+    lstThree: TListBox;
     se1: TSpinEdit;
     btn1: TButton;
-    lb1: TLabel;
+    lbOne: TLabel;
     lb2: TLabel;
     lb3: TLabel;
     lb4: TLabel;
     lb5: TLabel;
+    lb6: TLabel;
+    lstFour: TListBox;
+    lb7: TLabel;
+    lstFive: TListBox;
+    btn2: TButton;
+    function getNumberCompliteTasks: Integer;
     procedure btn1Click(Sender: TObject);
     procedure agedWorkTask(var AValue: TIntegerArray);
     procedure moveCopliteTaskToNextCenter(const ANumberOfCompliteTasks: Integer;
       var ASourceQuery: TIntegerArray; var ADestQuery: TIntegerArray);
     procedure fillListCenter(const AList: TListBox;
-  var AValue: TIntegerArray);
+      var AValue: TIntegerArray);
+    procedure FormCreate(Sender: TObject);
   private
     { Private declarations }
   public
     { Public declarations }
   end;
-
+const
+  PowerWorkCenter: Integer = 6;
 var
-  Form1: TForm1;
-  byteQueryOfDeveloping: TIntegerArray;
-  byteQueryOfTesting: TIntegerArray;
-  byteQueryOfDocumention: TIntegerArray;
+  fmMain: TfmMain;
+  byteQueryOfOne: TIntegerArray;
+  byteQueryOfTwo: TIntegerArray;
+  byteQueryOfThree: TIntegerArray;
+  byteQueryOfFour: TIntegerArray;
+  byteQueryOfFive: TIntegerArray;
   byteCompliteTask: TIntegerArray;
   iGood: integer;
   iBad: integer;
@@ -47,7 +57,7 @@ implementation
 {$R *.dfm}
 // —остариваем все задачи в очереди на один день
 
-procedure TForm1.agedWorkTask(var AValue: TIntegerArray);
+procedure TfmMain.agedWorkTask(var AValue: TIntegerArray);
 var
   i: Integer;
 begin
@@ -59,7 +69,7 @@ end;
 
 // —остариваем все задачи в очереди на один день
 
-procedure TForm1.moveCopliteTaskToNextCenter(const ANumberOfCompliteTasks: Integer;
+procedure TfmMain.moveCopliteTaskToNextCenter(const ANumberOfCompliteTasks: Integer;
   var ASourceQuery: TIntegerArray; var ADestQuery: TIntegerArray);
 var
   i: Integer;
@@ -77,7 +87,7 @@ begin
   ASourceQuery := Copy(ASourceQuery, ANumberOfCompliteTasks, Length(ASourceQuery));
 end;
 
-procedure TForm1.fillListCenter(const AList: TListBox;
+procedure TfmMain.fillListCenter(const AList: TListBox;
   var AValue: TIntegerArray);
 var
   i: Integer;
@@ -89,35 +99,55 @@ begin
     end;
 end;
 
-procedure TForm1.btn1Click(Sender: TObject);
+// ¬озвращает сколько задач за ход выполнил рабочий центр. ќт 1 до ..  PowerWorkCenter
+
+function TfmMain.getNumberCompliteTasks: Integer;
+begin
+  repeat
+    Result := Random(PowerWorkCenter);
+  until Result > 0;
+end;
+
+procedure TfmMain.btn1Click(Sender: TObject);
 var
   iRate: byte;
   i: Integer;
 begin
-  Randomize;
-  // ¬ыполн€ем работу в центре разработки
-  agedWorkTask(byteQueryOfDeveloping);
-  agedWorkTask(byteQueryOfTesting);
-  agedWorkTask(byteQueryOfDocumention);
-
   // ƒобавл€ем новые задани€
   for i := 1 to se1.Value do
     begin
       SetLength(byteQueryOfDeveloping, Length(byteQueryOfDeveloping) + 1);
-      byteQueryOfDeveloping[High(byteQueryOfDeveloping)] := 3;
+      byteQueryOfDeveloping[High(byteQueryOfDeveloping)] := 5;
     end;
+  // ƒень прошел, в кармане доллар (c) –ик
+  // —остариваем задачи наход€щиес€ в каждом центре
+  agedWorkTask(byteQueryOfOne);
+  agedWorkTask(byteQueryOfTwo);
+  agedWorkTask(byteQueryOfThree);
+  agedWorkTask(byteQueryOfFour);
+  agedWorkTask(byteQueryOfFive);
 
-  // ќпредел€ем сколько сделано работы
+  // ќпредел€ем сколько сделано работы в каждом центре и переносим эти задачи дальше по цепочке
+  // ÷енты обрабатываютс€ в обратном пор€дке, дл€ того что бы избежать эффекта телепортации задачи
+  moveCopliteTaskToNextCenter(getNumberCompliteTasks, byteQueryOfFive, byteCompliteTask);
+  moveCopliteTaskToNextCenter(getNumberCompliteTasks, byteQueryOfFour, byteQueryOfFive);
+  moveCopliteTaskToNextCenter(getNumberCompliteTasks, byteQueryOfThree, byteQueryOfFour);
+  moveCopliteTaskToNextCenter(getNumberCompliteTasks, byteQueryOfTwo, byteQueryOfThree);
+  moveCopliteTaskToNextCenter(getNumberCompliteTasks, byteQueryOfOne, byteQueryOfTwo);
+
+  // ¬изуализируем состо€ние очередей, дл€ каждого центра разработки
+  fillListCenter(lstOne, byteQueryOfOne);
+  fillListCenter(lstTwo, byteQueryOfTwo);
+  fillListCenter(lstThree, byteQueryOfThree);
+  fillListCenter(lstFour, byteQueryOfFour);
+  fillListCenter(lstFive, byteQueryOfFive);
 
 
-  iRate := Random(10);
-  lb3.Caption := IntToStr(iRate);
-  moveCopliteTaskToNextCenter(iRate,byteQueryOfDocumention,byteCompliteTask);
 
   // ѕерекидываем это количество в центр тестировани€ в конец
   for i := Low(byteCompliteTask) to High(byteCompliteTask) do
     begin
-      if byteCompliteTask[i]>=0 then
+      if byteCompliteTask[i] >= 0 then
         begin
           Inc(iGood);
         end
@@ -128,24 +158,25 @@ begin
     end;
   lb4.Caption := IntToStr(iGood);
   lb5.Caption := IntToStr(iBad);
-  SetLength(byteCompliteTask,0);
+  SetLength(byteCompliteTask, 0);
 
 
-  iRate := Random(10);
+  iRate := getNumberCompliteTasks;
   lb2.Caption := IntToStr(iRate);
-  moveCopliteTaskToNextCenter(iRate,byteQueryOfTesting,byteQueryOfDocumention);
+  moveCopliteTaskToNextCenter(iRate, byteQueryOfTesting, byteQueryOfDocumention);
 
-  iRate := Random(10);
+  iRate := getNumberCompliteTasks;
   lb1.Caption := IntToStr(iRate);
-  moveCopliteTaskToNextCenter(iRate,byteQueryOfDeveloping,byteQueryOfTesting);
+  moveCopliteTaskToNextCenter(iRate, byteQueryOfDeveloping, byteQueryOfTesting);
 
 
-  // «аполн€ем лист центра разработки
-  fillListCenter(lst1, byteQueryOfDeveloping);
-  fillListCenter(lst2, byteQueryOfTesting);
-  fillListCenter(lst3, byteQueryOfDocumention);
 
 
+end;
+
+procedure TfmMain.FormCreate(Sender: TObject);
+begin
+  Randomize;
 end;
 
 end.
