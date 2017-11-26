@@ -4,7 +4,7 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, StdCtrls, Spin;
+  Dialogs, StdCtrls, Spin, Vcl.ExtCtrls;
 
 type
 
@@ -15,25 +15,26 @@ type
     lstTwo: TListBox;
     lstThree: TListBox;
     se1: TSpinEdit;
-    btn1: TButton;
-    lbOne: TLabel;
-    lb2: TLabel;
-    lb3: TLabel;
+    btnProceedTurn: TButton;
     lb4: TLabel;
     lb5: TLabel;
-    lb6: TLabel;
     lstFour: TListBox;
-    lb7: TLabel;
     lstFive: TListBox;
     btn2: TButton;
+    tmTimer: TTimer;
+    Label1: TLabel;
+    lbBalans: TLabel;
+    procedure doTurn(const ATaskToWork: integer);
+    procedure updateStartTurnCaptiont;
     function getNumberCompliteTasks: Integer;
-    procedure btn1Click(Sender: TObject);
+    procedure btnProceedTurnClick(Sender: TObject);
     procedure agedWorkTask(var AValue: TIntegerArray);
     procedure moveCopliteTaskToNextCenter(const ANumberOfCompliteTasks: Integer;
       var ASourceQuery: TIntegerArray; var ADestQuery: TIntegerArray);
     procedure fillListCenter(const AList: TListBox;
       var AValue: TIntegerArray);
     procedure FormCreate(Sender: TObject);
+    procedure tmTimerTimer(Sender: TObject);
   private
     { Private declarations }
   public
@@ -41,7 +42,9 @@ type
   end;
 const
   PowerWorkCenter: Integer = 6;
+  TurnCost:        Integer = 10;
 var
+  iCountDown: integer;
   fmMain: TfmMain;
   byteQueryOfOne: TIntegerArray;
   byteQueryOfTwo: TIntegerArray;
@@ -51,6 +54,8 @@ var
   byteCompliteTask: TIntegerArray;
   iGood: integer;
   iBad: integer;
+  iBalans: integer;
+  iEarnByTurn: integer;
 
 implementation
 
@@ -87,6 +92,25 @@ begin
   ASourceQuery := Copy(ASourceQuery, ANumberOfCompliteTasks, Length(ASourceQuery));
 end;
 
+procedure TfmMain.updateStartTurnCaptiont;
+begin
+  btnProceedTurn.Caption := Format('Сделать ход. Осталось: %d', [iCountDown]);
+end;
+
+// Обработчик таймера, игроку дается на обдумывание хода 15 секунд
+procedure TfmMain.tmTimerTimer(Sender: TObject);
+begin
+  if iCountDown = 0 then
+    begin
+      doTurn(Random(6));
+    end
+  else
+    begin
+      dec(iCountDown);
+      updateStartTurnCaptiont
+    end;
+end;
+
 procedure TfmMain.fillListCenter(const AList: TListBox;
   var AValue: TIntegerArray);
 var
@@ -100,7 +124,6 @@ begin
 end;
 
 // Возвращает сколько задач за ход выполнил рабочий центр. От 1 до ..  PowerWorkCenter
-
 function TfmMain.getNumberCompliteTasks: Integer;
 begin
   repeat
@@ -108,16 +131,19 @@ begin
   until Result > 0;
 end;
 
-procedure TfmMain.btn1Click(Sender: TObject);
+// Выполняет ход
+procedure TfmMain.doTurn(const ATaskToWork: integer);
 var
-  iRate: byte;
   i: Integer;
 begin
+  fmMain.Enabled  := false;
+  tmTimer.Enabled := false;
+
   // Добавляем новые задания
-  for i := 1 to se1.Value do
+  for i := 1 to ATaskToWork do
     begin
-      SetLength(byteQueryOfDeveloping, Length(byteQueryOfDeveloping) + 1);
-      byteQueryOfDeveloping[High(byteQueryOfDeveloping)] := 5;
+      SetLength(byteQueryOfOne, Length(byteQueryOfOne) + 1);
+      byteQueryOfOne[High(byteQueryOfOne)] := 5;
     end;
   // День прошел, в кармане доллар (c) Рик
   // Состариваем задачи находящиеся в каждом центре
@@ -145,33 +171,32 @@ begin
 
 
   // Перекидываем это количество в центр тестирования в конец
+  iGood := 0;
+  iBad  := 0;
   for i := Low(byteCompliteTask) to High(byteCompliteTask) do
     begin
       if byteCompliteTask[i] >= 0 then
         begin
-          Inc(iGood);
+          Inc(iGood, 5);
         end
       else
         begin
-          Inc(iBad)
+          Dec(iBad, byteCompliteTask[i]*-1);
         end;
     end;
-  lb4.Caption := IntToStr(iGood);
-  lb5.Caption := IntToStr(iBad);
   SetLength(byteCompliteTask, 0);
+  iBalans := iBalans + iGood + iBad - TurnCost;
+  lbBalans.Caption := IntToStr(iBalans);
 
+  iCountDown      := 15;
+  tmTimer.Enabled := true;
+  fmMain.Enabled  := true;
+  updateStartTurnCaptiont;
+end;
 
-  iRate := getNumberCompliteTasks;
-  lb2.Caption := IntToStr(iRate);
-  moveCopliteTaskToNextCenter(iRate, byteQueryOfTesting, byteQueryOfDocumention);
-
-  iRate := getNumberCompliteTasks;
-  lb1.Caption := IntToStr(iRate);
-  moveCopliteTaskToNextCenter(iRate, byteQueryOfDeveloping, byteQueryOfTesting);
-
-
-
-
+procedure TfmMain.btnProceedTurnClick(Sender: TObject);
+begin
+  doTurn(se1.Value);
 end;
 
 procedure TfmMain.FormCreate(Sender: TObject);

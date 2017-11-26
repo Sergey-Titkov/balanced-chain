@@ -1,9 +1,9 @@
 object fmMain: TfmMain
   Left = 201
   Top = 133
-  Width = 1062
-  Height = 500
   Caption = 'fmMain'
+  ClientHeight = 587
+  ClientWidth = 1046
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -14,60 +14,51 @@ object fmMain: TfmMain
   OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
-  object lbOne: TLabel
-    Left = 236
-    Top = 18
-    Width = 6
-    Height = 13
-    Caption = '0'
-  end
-  object lb2: TLabel
-    Left = 364
-    Top = 26
-    Width = 14
-    Height = 13
-    Caption = 'lb2'
-  end
-  object lb3: TLabel
-    Left = 490
-    Top = 8
-    Width = 14
-    Height = 13
-    Caption = 'lb3'
-  end
   object lb4: TLabel
-    Left = 116
-    Top = 424
+    Left = 588
+    Top = 432
     Width = 14
     Height = 13
     Caption = 'lb4'
   end
   object lb5: TLabel
-    Left = 116
-    Top = 454
+    Left = 588
+    Top = 462
     Width = 14
     Height = 13
     Caption = 'lb5'
   end
-  object lb6: TLabel
-    Left = 620
-    Top = 24
-    Width = 14
-    Height = 13
-    Caption = 'lb3'
+  object Label1: TLabel
+    Left = 11
+    Top = 432
+    Width = 70
+    Height = 22
+    Caption = #1041#1072#1083#1072#1085#1089':'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -19
+    Font.Name = 'Consolas'
+    Font.Style = [fsBold]
+    ParentFont = False
   end
-  object lb7: TLabel
-    Left = 804
-    Top = 44
-    Width = 14
-    Height = 13
-    Caption = 'lb3'
+  object lbBalans: TLabel
+    Left = 87
+    Top = 432
+    Width = 10
+    Height = 22
+    Caption = '0'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -19
+    Font.Name = 'Consolas'
+    Font.Style = [fsBold]
+    ParentFont = False
   end
   object lstOne: TListBox
     Left = 6
     Top = 88
     Width = 121
-    Height = 289
+    Height = 305
     Font.Charset = RUSSIAN_CHARSET
     Font.Color = clWindowText
     Font.Height = -16
@@ -78,10 +69,10 @@ object fmMain: TfmMain
     TabOrder = 0
   end
   object lstTwo: TListBox
-    Left = 138
+    Left = 133
     Top = 88
     Width = 121
-    Height = 289
+    Height = 305
     Font.Charset = RUSSIAN_CHARSET
     Font.Color = clWindowText
     Font.Height = -16
@@ -92,10 +83,10 @@ object fmMain: TfmMain
     TabOrder = 1
   end
   object lstThree: TListBox
-    Left = 270
+    Left = 260
     Top = 88
     Width = 121
-    Height = 291
+    Height = 305
     Font.Charset = RUSSIAN_CHARSET
     Font.Color = clWindowText
     Font.Height = -16
@@ -106,8 +97,8 @@ object fmMain: TfmMain
     TabOrder = 2
   end
   object se1: TSpinEdit
-    Left = 190
-    Top = 412
+    Left = 11
+    Top = 52
     Width = 47
     Height = 22
     MaxValue = 255
@@ -115,20 +106,20 @@ object fmMain: TfmMain
     TabOrder = 3
     Value = 0
   end
-  object btn1: TButton
-    Left = 288
-    Top = 418
-    Width = 75
+  object btnProceedTurn: TButton
+    Left = 64
+    Top = 50
+    Width = 217
     Height = 25
     Caption = #1057#1076#1077#1083#1072#1090#1100' '#1093#1086#1076
     TabOrder = 4
-    OnClick = btn1Click
+    OnClick = btnProceedTurnClick
   end
   object lstFour: TListBox
-    Left = 402
+    Left = 387
     Top = 88
     Width = 121
-    Height = 291
+    Height = 305
     Font.Charset = RUSSIAN_CHARSET
     Font.Color = clWindowText
     Font.Height = -16
@@ -139,10 +130,10 @@ object fmMain: TfmMain
     TabOrder = 5
   end
   object lstFive: TListBox
-    Left = 534
+    Left = 514
     Top = 88
     Width = 121
-    Height = 291
+    Height = 305
     Font.Charset = RUSSIAN_CHARSET
     Font.Color = clWindowText
     Font.Height = -16
@@ -159,5 +150,11 @@ object fmMain: TfmMain
     Height = 25
     Caption = #1053#1072#1095#1072#1090#1100' '#1080#1075#1088#1091
     TabOrder = 7
+  end
+  object tmTimer: TTimer
+    Enabled = False
+    OnTimer = tmTimerTimer
+    Left = 296
+    Top = 48
   end
 end
