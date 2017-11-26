@@ -28,8 +28,8 @@ object Form1: TForm1
     Caption = 'lb2'
   end
   object lb3: TLabel
-    Left = 648
-    Top = 84
+    Left = 492
+    Top = 68
     Width = 14
     Height = 13
     Caption = 'lb3'
@@ -40,6 +40,13 @@ object Form1: TForm1
     Width = 14
     Height = 13
     Caption = 'lb4'
+  end
+  object lb5: TLabel
+    Left = 652
+    Top = 142
+    Width = 14
+    Height = 13
+    Caption = 'lb5'
   end
   object lst1: TListBox
     Left = 236

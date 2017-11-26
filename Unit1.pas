@@ -20,6 +20,7 @@ type
     lb2: TLabel;
     lb3: TLabel;
     lb4: TLabel;
+    lb5: TLabel;
     procedure btn1Click(Sender: TObject);
     procedure agedWorkTask(var AValue: TIntegerArray);
     procedure moveCopliteTaskToNextCenter(const ANumberOfCompliteTasks: Integer;
@@ -125,8 +126,8 @@ begin
           Inc(iBad)
         end;
     end;
-  lb3.Caption := IntToStr(iGood);
-  lb4.Caption := IntToStr(iBad);
+  lb4.Caption := IntToStr(iGood);
+  lb5.Caption := IntToStr(iBad);
   SetLength(byteCompliteTask,0);
 
 
