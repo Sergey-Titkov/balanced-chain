@@ -19,7 +19,7 @@ object fmMain: TfmMain
   object Label1: TLabel
     Left = 11
     Top = 432
-    Width = 70
+    Width = 77
     Height = 22
     Caption = #1041#1072#1083#1072#1085#1089':'
     Font.Charset = DEFAULT_CHARSET
@@ -32,7 +32,7 @@ object fmMain: TfmMain
   object lbBalans: TLabel
     Left = 87
     Top = 432
-    Width = 10
+    Width = 11
     Height = 22
     Caption = '0'
     Font.Charset = DEFAULT_CHARSET
