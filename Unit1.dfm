@@ -49,12 +49,12 @@ object fmMain: TfmMain
     Height = 13
     Caption = #1044#1086#1089#1090#1091#1087#1085#1086' '#1077#1076#1080#1085#1080#1094' '#1084#1086#1076#1085#1086#1089#1090#1080':'
   end
-  object lb5: TLabel
+  object lbFreePower: TLabel
     Left = 158
     Top = 86
-    Width = 14
+    Width = 6
     Height = 13
-    Caption = 'lb5'
+    Caption = '0'
   end
   object se1: TSpinEdit
     Left = 11
@@ -113,7 +113,7 @@ object fmMain: TfmMain
       Height = 13
       Caption = #1052#1086#1097#1085#1086#1089#1090#1100':'
     end
-    object se2: TSpinEdit
+    object sePowerOfCenetrOne: TSpinEdit
       Left = 199
       Top = 11
       Width = 47
@@ -121,7 +121,8 @@ object fmMain: TfmMain
       MaxValue = 255
       MinValue = 0
       TabOrder = 0
-      Value = 0
+      Value = 6
+      OnKeyPress = sePowerOfCenetrOneKeyPress
     end
   end
   object gb2: TGroupBox
@@ -152,7 +153,7 @@ object fmMain: TfmMain
       Height = 13
       Caption = #1052#1086#1097#1085#1086#1089#1090#1100':'
     end
-    object se3: TSpinEdit
+    object sePowerOfCenetrTwo: TSpinEdit
       Left = 199
       Top = 11
       Width = 47
@@ -160,7 +161,7 @@ object fmMain: TfmMain
       MaxValue = 255
       MinValue = 0
       TabOrder = 0
-      Value = 0
+      Value = 6
     end
   end
   object gb3: TGroupBox
@@ -191,7 +192,7 @@ object fmMain: TfmMain
       Height = 13
       Caption = #1052#1086#1097#1085#1086#1089#1090#1100':'
     end
-    object se4: TSpinEdit
+    object sePowerOfCenetrThree: TSpinEdit
       Left = 199
       Top = 11
       Width = 47
@@ -199,7 +200,7 @@ object fmMain: TfmMain
       MaxValue = 255
       MinValue = 0
       TabOrder = 0
-      Value = 0
+      Value = 6
     end
   end
   object gb4: TGroupBox
@@ -230,7 +231,7 @@ object fmMain: TfmMain
       Height = 13
       Caption = #1052#1086#1097#1085#1086#1089#1090#1100':'
     end
-    object se5: TSpinEdit
+    object sePowerOfCenetrFour: TSpinEdit
       Left = 199
       Top = 11
       Width = 47
@@ -238,7 +239,7 @@ object fmMain: TfmMain
       MaxValue = 255
       MinValue = 0
       TabOrder = 0
-      Value = 0
+      Value = 6
     end
   end
   object gb5: TGroupBox
@@ -269,7 +270,7 @@ object fmMain: TfmMain
       Height = 13
       Caption = #1052#1086#1097#1085#1086#1089#1090#1100':'
     end
-    object se6: TSpinEdit
+    object sePowerOfCenetrFive: TSpinEdit
       Left = 199
       Top = 11
       Width = 47
@@ -277,7 +278,7 @@ object fmMain: TfmMain
       MaxValue = 255
       MinValue = 0
       TabOrder = 0
-      Value = 0
+      Value = 6
     end
   end
   object tmTimer: TTimer
