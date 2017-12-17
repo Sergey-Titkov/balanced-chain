@@ -11,17 +11,39 @@ type
   TIntegerArray = array of Integer;
 
   TfmMain = class(TForm)
-    lstOne: TListBox;
-    lstTwo: TListBox;
-    lstThree: TListBox;
     se1: TSpinEdit;
     btnProceedTurn: TButton;
-    lstFour: TListBox;
-    lstFive: TListBox;
     btnStartGame: TButton;
     tmTimer: TTimer;
     Label1: TLabel;
     lbBalans: TLabel;
+    gb1: TGroupBox;
+    lb1: TLabel;
+    lbQueryLengthCenterOne: TLabel;
+    lb3: TLabel;
+    se2: TSpinEdit;
+    lb4: TLabel;
+    lb5: TLabel;
+    gb2: TGroupBox;
+    lb6: TLabel;
+    lbQueryLengthCenterTwo: TLabel;
+    lb8: TLabel;
+    se3: TSpinEdit;
+    gb3: TGroupBox;
+    lb9: TLabel;
+    lbQueryLengthCenterThree: TLabel;
+    lb11: TLabel;
+    se4: TSpinEdit;
+    gb4: TGroupBox;
+    lb12: TLabel;
+    lbQueryLengthCenterFour: TLabel;
+    lb14: TLabel;
+    se5: TSpinEdit;
+    gb5: TGroupBox;
+    lb15: TLabel;
+    lbQueryLengthCenterFive: TLabel;
+    lb17: TLabel;
+    se6: TSpinEdit;
     function TIntegerArrayToString(var AValue: TIntegerArray): string;
     procedure doTurn(const ATaskToWork: integer);
     procedure updateStartTurnCaptiont;
@@ -30,8 +52,8 @@ type
     procedure agedWorkTask(var AValue: TIntegerArray);
     procedure moveCopliteTaskToNextCenter(const ANumberOfCompliteTasks: Integer;
       var ASourceQuery: TIntegerArray; var ADestQuery: TIntegerArray);
-    procedure fillListCenter(const AList: TListBox;
-      var AValue: TIntegerArray);
+    procedure fillListCenter(const ALabel: TLabel;
+  var AValue: TIntegerArray);
     procedure FormCreate(Sender: TObject);
     procedure tmTimerTimer(Sender: TObject);
     procedure btnStartGameClick(Sender: TObject);
@@ -127,16 +149,12 @@ begin
     end;
 end;
 
-procedure TfmMain.fillListCenter(const AList: TListBox;
+procedure TfmMain.fillListCenter(const ALabel: TLabel;
   var AValue: TIntegerArray);
-var
-  i: Integer;
+
 begin
-  AList.Items.Clear;
-  for i := Low(AValue) to High(AValue) do
-    begin
-      AList.Items.Add(IntToStr(AValue[i]));
-    end;
+  ALabel.Caption := IntToString(Length(AValue));
+
 end;
 
 // Возвращает сколько задач за ход выполнил рабочий центр. От 1 до ..  PowerWorkCenter
@@ -241,11 +259,11 @@ begin
   ILog.Log(sllInfo,'Центр 2, состояние очереди: % => % CR',[sAfter, TIntegerArrayToString(byteQueryOfTwo)]);
 
   // Визуализируем состояние очередей, для каждого центра разработки
-  fillListCenter(lstOne, byteQueryOfOne);
-  fillListCenter(lstTwo, byteQueryOfTwo);
-  fillListCenter(lstThree, byteQueryOfThree);
-  fillListCenter(lstFour, byteQueryOfFour);
-  fillListCenter(lstFive, byteQueryOfFive);
+  fillListCenter(lbQueryLengthCenterOne, byteQueryOfOne);
+  fillListCenter(lbQueryLengthCenterTwo, byteQueryOfTwo);
+  fillListCenter(lbQueryLengthCenterThree, byteQueryOfThree);
+  fillListCenter(lbQueryLengthCenterFour, byteQueryOfFour);
+  fillListCenter(lbQueryLengthCenterFive, byteQueryOfFive);
 
 
 
@@ -291,11 +309,11 @@ begin
   SetLength(byteQueryOfFour, 0);
   SetLength(byteQueryOfFive, 0);
 
-  lstOne.Items.Clear;
-  lstTwo.Items.Clear;
-  lstThree.Items.Clear;
-  lstFour.Items.Clear;
-  lstFive.Items.Clear;
+  lbQueryLengthCenterOne.Caption := '0';
+  lbQueryLengthCenterTwo.Caption := '0';
+  lbQueryLengthCenterThree.Caption := '0';
+  lbQueryLengthCenterFour.Caption := '0';
+  lbQueryLengthCenterFive.Caption := '0';
   updateStartTurnCaptiont;
   btnProceedTurn.Enabled := true;
   tmTimer.Enabled := true;
