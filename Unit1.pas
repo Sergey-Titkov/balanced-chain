@@ -49,7 +49,7 @@ type
     function TIntegerArrayToString(var AValue: TIntegerArray): string;
     procedure doTurn(const ATaskToWork: integer);
     procedure updateStartTurnCaptiont;
-    function getNumberCompliteTasks: Integer;
+    function getNumberCompliteTasks(APower: Integer): Integer;
     procedure btnProceedTurnClick(Sender: TObject);
     procedure agedWorkTask(var AValue: TIntegerArray);
     procedure moveCopliteTaskToNextCenter(const ANumberOfCompliteTasks: Integer;
@@ -161,12 +161,12 @@ begin
 
 end;
 
-// Возвращает сколько задач за ход выполнил рабочий центр. От 1 до ..  PowerWorkCenter
+// Возвращает сколько задач за ход выполнил рабочий центр. От 1 до .. мощности кокретного центра
 
-function TfmMain.getNumberCompliteTasks: Integer;
+function TfmMain.getNumberCompliteTasks(APower: Integer): Integer;
 begin
   repeat
-    Result := Random(PowerWorkCenter);
+    Result := Random(APower);
   until Result > 0;
 end;
 
@@ -225,14 +225,15 @@ begin
   // Определяем сколько сделано работы в каждом центре и переносим эти задачи дальше по цепочке
   // Центы обрабатываются в обратном порядке, для того что бы избежать эффекта телепортации задачи
   SetLength(byteCompliteTask, 0);
-  iDoTask := getNumberCompliteTasks;
+
+  iDoTask := getNumberCompliteTasks(sePowerOfCenetrFive.Value);
   sBefore := TIntegerArrayToString(byteQueryOfFive);
   moveCopliteTaskToNextCenter(iDoTask, byteQueryOfFive, byteCompliteTask);
   sAfter := TIntegerArrayToString(byteQueryOfFive);
-  ILog.Log(sllInfo, 'Центр 5, выполнено задач: %, состояние очереди: % => % CR', [IntToString(iDoTask), sBefore, sAfter]);
+  ILog.Log(sllInfo, 'Центр 5, мощность: %, выполнено задач: %, состояние очереди: % => % CR', [IntToStr(sePowerOfCenetrFive.Value), IntToString(iDoTask), sBefore, sAfter]);
 
-  iDoTask := getNumberCompliteTasks;
-  ILog.Log(sllInfo, 'Центр 4, выполнено задач: %', [IntToString(iDoTask)]);
+  iDoTask := getNumberCompliteTasks(sePowerOfCenetrFour.Value);
+  ILog.Log(sllInfo, 'Центр 4, мощность: %, выполнено задач: %', [IntToStr(sePowerOfCenetrFour.Value), IntToString(iDoTask)]);
   sBefore := TIntegerArrayToString(byteQueryOfFour);
   sAfter := TIntegerArrayToString(byteQueryOfFive);
   moveCopliteTaskToNextCenter(iDoTask, byteQueryOfFour, byteQueryOfFive);
@@ -240,24 +241,24 @@ begin
   ILog.Log(sllInfo, 'Центр 5, состояние очереди: % => % CR', [sAfter, TIntegerArrayToString(byteQueryOfFive)]);
 
 
-  iDoTask := getNumberCompliteTasks;
-  ILog.Log(sllInfo, 'Центр 3, выполнено задач: %', [IntToString(iDoTask)]);
+  iDoTask := getNumberCompliteTasks(sePowerOfCenetrThree.Value);
+  ILog.Log(sllInfo, 'Центр 3, мощность: %, выполнено задач: %', [IntToStr(sePowerOfCenetrThree.Value), IntToString(iDoTask)]);
   sBefore := TIntegerArrayToString(byteQueryOfThree);
   sAfter := TIntegerArrayToString(byteQueryOfFour);
   moveCopliteTaskToNextCenter(iDoTask, byteQueryOfThree, byteQueryOfFour);
   ILog.Log(sllInfo, 'Центр 3, состояние очереди: % => %', [sBefore, TIntegerArrayToString(byteQueryOfThree)]);
   ILog.Log(sllInfo, 'Центр 4, состояние очереди: % => % CR', [sAfter, TIntegerArrayToString(byteQueryOfFour)]);
 
-  iDoTask := getNumberCompliteTasks;
-  ILog.Log(sllInfo, 'Центр 2, выполнено задач: %', [IntToString(iDoTask)]);
+  iDoTask := getNumberCompliteTasks(sePowerOfCenetrTwo.Value);
+  ILog.Log(sllInfo, 'Центр 2, мощность: %, выполнено задач: %', [IntToStr(sePowerOfCenetrTwo.Value), IntToString(iDoTask)]);
   sBefore := TIntegerArrayToString(byteQueryOfTwo);
   sAfter := TIntegerArrayToString(byteQueryOfThree);
   moveCopliteTaskToNextCenter(iDoTask, byteQueryOfTwo, byteQueryOfThree);
   ILog.Log(sllInfo, 'Центр 2, состояние очереди: % => %', [sBefore, TIntegerArrayToString(byteQueryOfTwo)]);
   ILog.Log(sllInfo, 'Центр 3, состояние очереди: % => % CR', [sAfter, TIntegerArrayToString(byteQueryOfThree)]);
 
-  iDoTask := getNumberCompliteTasks;
-  ILog.Log(sllInfo, 'Центр 1, выполнено задач: %', [IntToString(iDoTask)]);
+  iDoTask := getNumberCompliteTasks(sePowerOfCenetrOne.Value);
+  ILog.Log(sllInfo, 'Центр 1, мощность: %, выполнено задач: %', [IntToStr(sePowerOfCenetrOne.Value), IntToString(iDoTask)]);
   sBefore := TIntegerArrayToString(byteQueryOfOne);
   sAfter := TIntegerArrayToString(byteQueryOfTwo);
   moveCopliteTaskToNextCenter(iDoTask, byteQueryOfOne, byteQueryOfTwo);
@@ -326,6 +327,12 @@ begin
   sePowerOfCenetrThree.Value := 6;
   sePowerOfCenetrFour.Value := 6;
   sePowerOfCenetrFive.Value := 6;
+
+  sePowerOfCenetrOne.Enabled := True;
+  sePowerOfCenetrTwo.Enabled := True;
+  sePowerOfCenetrThree.Enabled := True;
+  sePowerOfCenetrFour.Enabled := True;
+  sePowerOfCenetrFive.Enabled := True;
 
   iFreePower := 0;
   lbFreePower.Caption := '0';

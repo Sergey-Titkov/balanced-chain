@@ -118,6 +118,7 @@ object fmMain: TfmMain
       Top = 11
       Width = 47
       Height = 22
+      Enabled = False
       MaxValue = 255
       MinValue = 0
       TabOrder = 0
@@ -158,6 +159,7 @@ object fmMain: TfmMain
       Top = 11
       Width = 47
       Height = 22
+      Enabled = False
       MaxValue = 255
       MinValue = 0
       TabOrder = 0
@@ -197,6 +199,7 @@ object fmMain: TfmMain
       Top = 11
       Width = 47
       Height = 22
+      Enabled = False
       MaxValue = 255
       MinValue = 0
       TabOrder = 0
@@ -236,6 +239,7 @@ object fmMain: TfmMain
       Top = 11
       Width = 47
       Height = 22
+      Enabled = False
       MaxValue = 255
       MinValue = 0
       TabOrder = 0
@@ -275,6 +279,7 @@ object fmMain: TfmMain
       Top = 11
       Width = 47
       Height = 22
+      Enabled = False
       MaxValue = 255
       MinValue = 0
       TabOrder = 0
